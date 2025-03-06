@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Калькулятор{% endblock %}
+{% block content %}
+
+<h1>Калькулятор калорий</h1>
+<link rel="stylesheet" type="text/css" href="{% static 'calculator/css/calculator.css' %}">
+
+<!-- Кнопки для переключения между блюдами и продуктами -->
+<div id="button-container">
+    <button id="show-products" onclick="showProducts()">Продукты</button>
+    <button id="show-dishes" onclick="showDishes()">Блюда</button>
+</div>
+
+<!-- Список добавленных продуктов -->
+<div id="added-products-container">
+    <h2>Добавленные продукты и блюда</h2>
+    <ul id="added-products" style="list-style-type: none; padding: 0;"></ul>
+    <div class="total-calories">
+        <h3>Общее количество калорий: <span id="calorie-sum">0</span> ккал</h3>
+    </div>
+</div>
+
+<!-- Контейнер для списков -->
+<div id="product-list-container">
+    <!-- Список доступных продуктов -->
+    <div id="dish-list" style="display: block;">
+        <form method="post">
+            {% csrf_token %}
+            {% for dish in dishes %}
+                <div class="item-block">
+                    <div class="item-details" onclick="openWeightModal('{{ dish.kcals }}', '{{ dish.name }}', 'dish')" data-category="{{ dish.categorys }}">
+                        <img src="{% if dish.images %}{% static dish.images %}{% else %}{% static 'dishes/images/none.jpg' %}{% endif %}" alt="{{ dish.name }}" class="dish-image" style="width: 200px; height: 200px;">
+                        <div class="item-details-container">
+                            <h3 class="item-name">{{ dish.name }}</h3>
+                            <div>
+                                <label class="item-calories">Калории:</label>
+                                <span class="item-calories-value">{{ dish.kcals }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </form>
+    </div>
+
+    <div id="product-list" style="display: none;">
+        <form method="post">
+            {% csrf_token %}
+            {% for product in products %}
+                <div class="item-block">
+                    <div class="item-details" onclick="openWeightModal('{{ product.kcals }}', '{{ product.name }}', 'product')" data-category="{{ product.categorys }}">
+                        {% if p.images.url %}
+                           <img src="{{ p.images.url }}" class="product-image" style="width: 50px; height: auto;">
+                       {% else %}
+                           <img src="{% static 'products/images/none.jpg' %}" class="product-image" style="width: 50px; height: auto;">
+                       {% endif %}
+                        <div class="item-details-container">
+                            <h3 class="item-name">{{ product.name }}</h3>
+                            <div>
+                                <label class="item-calories">Калории:</label>
+                                <span class="item-calories-value">{{ product.kcals }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </form>
+    </div>
+</div>
+
+<!-- Модальное окно для ввода веса -->
+<div id="weight-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeWeightModal()">&times;</span>
+        <h2 id="modal-title">Введите вес</h2>
+        <label for="weight-input">Вес (г):</label>
+        <input type="number" id="weight-input" min="1">
+        <button id="add-button" onclick="addItem()">Добавить</button>
+    </div>
+</div>
+
+<script>
+    // Объявление переменных
+    let currentCalories;
+    let currentItemName;
+    let itemType;
+    const addedItems = [];   // Массив для хранения добавленных продуктов
+    let totalCalories = 0;   // Переменная для хранения общего количества калорий
+
+    // Функции для переключения между продуктами и блюдами
+    function showProducts() {
+        document.getElementById('product-list').style.display = 'block';
+        document.getElementById('dish-list').style.display = 'none';
+    }
+
+    function showDishes() {
+        document.getElementById('product-list').style.display = 'none';
+        document.getElementById('dish-list').style.display = 'block';
+    }
+
+    function openWeightModal(calories, name, type) {
+        currentCalories = parseFloat(calories);
+        currentItemName = name;
+        itemType = type;
+        document.getElementById('modal-title').textContent = `Добавить ${name}`;
+        document.getElementById('weight-modal').style.display = 'block';
+    }
+
+    function closeWeightModal() {
+        document.getElementById('weight-modal').style.display = 'none';
+        document.getElementById('weight-input').value = '';
+    }
+
+    // Функция для добавления элемента
+    function addItem() {
+        const weight = parseFloat(document.getElementById('weight-input').value);
+        if (weight > 0) {
+            const caloriesForItem = (currentCalories / 100) * weight; // Правильный расчет калорий
+            totalCalories += caloriesForItem; // Общие калории
+            addedItems.push({ name: currentItemName, weight: weight, calories: caloriesForItem }); // Сохранить добавленные элементы
+            updateAddedProductsList(); // Обновить отображаемый список
+            document.getElementById('calorie-sum').textContent = totalCalories.toFixed(2); // Обновить общие калории
+            closeWeightModal(); // Закрыть модальное окно
+        } else {
+            alert('Введите корректный вес.');
+        }
+    }
+    
+    function updateAddedProductsList() {
+        const addedProductsElement = document.getElementById('added-products');
+        addedProductsElement.innerHTML = ''; // Очистить текущий список
+        addedItems.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.textContent = `${item.name} (${item.weight} г) - ${item.calories.toFixed(2)} калорий`;
+            
+            // Создание кнопки удаления
+            const removeButton = document.createElement('button');
+            removeButton.textContent = '✖'; // Символ крестика
+            removeButton.classList.add('remove-button');
+            
+            // Привязка функции удаления к кнопке
+            removeButton.onclick = () => removeItem(index); // Удаление элемента
+            
+            li.appendChild(removeButton); // Добавление кнопки удаления в элемент списка
+            addedProductsElement.appendChild(li); // Добавить элемент списка
+        });
+    }
+    function removeItem(index) {
+        totalCalories -= addedItems[index].calories; // Вычитаем калории удаляемого элемента
+        addedItems.splice(index, 1); // Удаляем элемент из массива
+        updateAddedProductsList(); // Обновляем список
+        document.getElementById('calorie-sum').textContent = totalCalories.toFixed(2); // Обновляем общее количество калорий
+    }
+</script>
+
+{% endblock %}

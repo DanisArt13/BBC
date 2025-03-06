@@ -1,0 +1,49 @@
+/* Общие стили для html и body */
+html, body {
+    font-family: Arial, sans-serif;
+    height: 100%; /* Установка высоты для html и body */
+    margin: 0; /* Убираем отступы */
+}
+
+/* Заголовок */
+header {
+    position: relative; /* Относительное позиционирование для корректной работы */
+    z-index: 1;
+}
+
+/* Основной контент */
+#main-content {
+    display: flex;
+    height: calc(100vh - 60px); /* Учитывая высоту header, скорректируйте 60px по мере необходимости */
+}
+
+/* Боковая панель категорий */
+#category-sidebar {
+    background-color: #f1f1f1; /* Цвет фона боковой панели */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    position: sticky; /* Делаем его фиксированным относительно определенной позиции */
+    top: 0; /* Фиксируем сверху */
+    height: 100%; /* Задаем полную высоту */
+}
+
+/* Список категорий */
+#category-list {
+    list-style-type: none; /* Отключаем стандартные маркеры списка */
+    padding: 0; /* Убираем отступы */
+    margin: 0; /* Убираем маргин */
+}
+
+/* Элементы списка категорий */
+#category-list li {
+    margin-bottom: 15px; /* Отступ между категориями */
+    background-color: #ffffff; /* Цвет фона для категорий */
+    padding: 10px; /* Внутренний отступ */
+    border-radius: 5px; /* Закругление углов */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для каждой категории */
+    transition: background-color 0.3s, transform 0.2s; /* Плавный переход */
+}
+
+/* Основные стили для колонок */
+.column {
+    flex: 1; /* Позволяет колон

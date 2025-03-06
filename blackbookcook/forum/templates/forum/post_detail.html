@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'post/css/post.css' %}">
+<div class="post-container">
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+    <div class="post-meta">
+        <span>Автор: {{ post.author }}</span> - 
+        <span>Дата: {{ post.created_at|date:"d.m.Y" }}</span>
+    </div>
+    
+    <h2>Комментарии:</h2>
+    <ul class="comments-list">
+        {% for comment in post.comments.all %}
+            <li class="comment-item">
+                <strong>{{ comment.author }}:</strong> {{ comment.content }} <br>
+                <small>Дата: {{ comment.created_at|date:"d.m.Y H:i" }}</small>
+            </li>
+        {% empty %}
+            <li>Комментариев нет.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Добавить комментарий:</h3>
+    <form action="{% url 'forum:post_detail' post.pk %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="author" value="{{ user.username }}">  <!-- Скрытое поле для имени -->
+        <textarea name="content" rows="3" placeholder="Ваш комментарий" required></textarea>
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+
+<script src="{% static 'post/js/post.js' %}"></script>
+{% endblock %}

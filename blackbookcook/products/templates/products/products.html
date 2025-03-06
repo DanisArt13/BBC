@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Продукты{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+
+<div id="main-content">
+    
+    <div class="column">
+        <h2>Список продуктов</h2>
+        <!-- Список продуктов -->
+        <div id="product-list">
+            <!-- Поле для поиска -->
+            <input type="text" id="search" placeholder="Поиск продуктов..." oninput="filterProducts()" />
+            {% for p in products %}
+                <div class="product-form" id="product-form" onclick="openProductModal('{{ p.id }}', '{{ p.name }}', '{{ p.kcals }}', '{{ p.proteins }}', '{{ p.fats }}', '{{ p.carbs }}')" data-category="{{ p.categorys }}">
+                   {% if p.images.url %}
+                       <img src="{{ p.images.url }}" class="product-image" style="width: 50px; height: auto;">
+                   {% else %}
+                       <img src="{% static 'products/images/none.jpg' %}" class="product-image" style="width: 50px; height: auto;">
+                   {% endif %}
+                   <div class="product-details">
+                       <h3 class="product-name-value">{{ p.name }}</h3>
+                       
+                   </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+        <!-- Боковой блок с категориями -->
+    <div id="category-sidebar">
+        <h2>Категории</h2>
+        <ul id="category-list">
+            <li onclick="filterByCategory('фрукты')">Фрукты</li>
+            <li onclick="filterByCategory('овощи')">Овощи</li>
+            <li onclick="filterByCategory('мясо')">Мясо</li>
+            <li onclick="filterByCategory('рыба')">Рыба</li>
+            <!-- Добавьте другие категории по желанию -->
+        </ul>
+    </div>
+</div>
+<!-- Модальное окно -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeProductModal()">&times;</span>
+        <h2 id="modal-product-name"></h2>
+        <div class="modal-product-data">
+            <image>
+                {% if p.images.url %}
+                    <img src="{{ p.images.url }}" class="product-image" style="width: 50px; height: auto;">
+                {% else %}
+                    <img src="{% static 'images/dishes/img_none.png' %}" class="product-image" style="width: 50px; height: auto;">
+                {% endif %}
+            </image>
+            <div class="product-nutrition-info">
+                <div class="nutrition-item">
+                    <span id="modal-product-kcals"></span>
+                    <p>Калории</p>
+                </div>
+                <div class="nutrition-item">
+                    <span id="modal-product-proteins"></span>
+                    <p>Белки</p>
+                </div>
+                <div class="nutrition-item">
+                    <span id="modal-product-fats"></span>
+                    <p>Жиры</p>
+                </div>
+                <div class="nutrition-item">
+                    <span id="modal-product-carbs"></span>
+                    <p>Углеводы</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+// Функция для фильтрации продуктов по вводу в строке поиска
+    function filterProducts() {
+        const searchInput = document.getElementById('search').value.toLowerCase();
+        const productList = document.getElementById('product-list');
+        const products = productList.getElementsByTagName('div');
+
+        for (let i = 0; i < products.length; i++) {
+            const productName = products[i].textContent.toLowerCase();
+            if (productName.includes(searchInput)) {
+                products[i].style.display = ''; // Показываем элемент
+            } else {
+                products[i].style.display = 'none'; // Скрываем элемент
+            }
+        }
+    }
+
+    function openProductModal(id, name, kcals, proteins, fats, carbs) {
+        document.getElementById('modal-product-name').textContent = name;
+        document.getElementById('modal-product-kcals').textContent = kcals;
+        document.getElementById('modal-product-proteins').textContent = proteins;
+        document.getElementById('modal-product-fats').textContent = fats;
+        document.getElementById('modal-product-carbs').textContent = carbs;
+        
+        const modal = document.getElementById('productModal');
+        modal.style.display = "block"; // Показываем модальное окно
+    }
+
+    function closeProductModal() {
+        const modal = document.getElementById('productModal');
+        modal.style.display = "none"; // Скрываем модальное окно
+    }
+
+    function filterByCategory(category) {
+        const productList = document.getElementById('product-list');
+        const product = productList.getElementsByClassName('product-form');
+
+        for (let i = 0; i < product.length; i++) {
+            const productCategory = product[i].getAttribute('data-category'); // Предполагается, что категории хранятся в атрибуте data-category
+            console.log(product[i])
+            if (productCategory === category || category === 'Все') {
+                product[i].style.display = ''; // Показываем элемент
+            } else {
+                product[i].style.display = 'none'; // Скрываем элемент
+            }
+        }
+        console.log("Фильтруем по категории: " + category);
+    }
+</script>
+
+{% endblock %}

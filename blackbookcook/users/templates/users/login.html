@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link rel="stylesheet" href="{% static 'users/css/login.css' %}">  <!-- Подключите CSS -->
+</head>
+<body>
+    <div class="container">
+        <div class="form-card">
+            <h1>Вход</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Войти</button>
+            </form>
+            <p>Нет учетной записи? <a href="{% url 'user:register' %}">Зарегистрируйтесь</a></p>
+        </div>
+    </div>
+</body>
+</html>

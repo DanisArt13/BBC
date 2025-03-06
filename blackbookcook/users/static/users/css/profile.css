@@ -1,0 +1,126 @@
+/* Общие стили */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0px;
+}
+
+.profile-container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow: hidden;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-header img {
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profile-header h2 {
+    margin: 0;
+}
+
+.profile-details {
+    margin-bottom: 20px;
+}
+
+.profile-details h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.profile-details p {
+    margin: 5px 0;
+    color: #666;
+}
+
+/* Кнопка редактирования */
+button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #4cae4c; 
+}
+
+.button {
+    display: inline-block; /* Делаем ссылку блочным элементом */
+    background-color: #5cb85c; /* Цвет фона */
+    color: white; /* Цвет текста */
+    border: none; /* Убираем границу */
+    border-radius: 5px; /* Скругляем углы */
+    padding: 10px 15px; /* Внутренние отступы */
+    text-decoration: none; /* Убираем подчеркивание */
+    cursor: pointer; /* Изменяем курсор на указатель */
+    transition: background-color 0.3s; /* Плавный переход цвета */
+}
+
+.button:hover {
+    background-color: #4cae4c; /* Цвет фона при наведении */
+}
+
+.saved-dishes-button {
+    margin-top: 20px; /* Отступ сверху */
+}
+
+/* Стили для формы редактирования */
+.edit-form {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: none; /* Скрыть по умолчанию */
+}
+
+.edit-form h3 {
+    margin-top: 0;
+}
+
+.edit-form label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #333;
+}
+
+.edit-form input,
+.edit-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.edit-form button[type="submit"] {
+    background-color: #007bff;
+}
+
+.edit-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.edit-form button[type="button"] {
+    background-color: #dc3545;
+}
+
+.edit-form button[type="button"]:hover {
+    background-color: #c82333;
+}

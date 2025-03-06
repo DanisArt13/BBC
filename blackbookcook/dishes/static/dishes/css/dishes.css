@@ -1,0 +1,325 @@
+/* Общие стили для html и body */
+html, body {
+    font-family: Arial, sans-serif;
+    height: 100%; /* Установка высоты для html и body */
+    margin: 0; /* Убираем отступы */
+}
+
+/* Заголовок */
+header {
+    position: relative; /* Относительное позиционирование для корректной работы */
+    z-index: 1;
+}
+
+/* Основной контент */
+#main-content {
+    display: flex;
+    height: calc(100vh - 60px); /* Учитывая высоту header, скорректируйте 60px по мере необходимости */
+    flex-direction: column; /* Вертикальная ориентация для маленьких экранов */
+}
+
+/* Боковая панель категорий */
+#category-sidebar {
+    background-color: #f1f1f1; /* Цвет фона боковой панели */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    position: sticky; /* Делаем его фиксированным относительно определенной позиции */
+    top: 0; /* Фиксируем сверху */
+    height: 100%; /* Задаем полную высоту */
+}
+
+/* Список категорий */
+#category-list {
+    list-style-type: none; /* Отключаем стандартные маркеры списка */
+    padding: 0; /* Убираем отступы */
+    margin: 0; /* Убираем маргин */
+}
+
+/* Элементы списка категорий */
+#category-list li {
+    margin-bottom: 15px; /* Отступ между категориями */
+    background-color: #ffffff; /* Цвет фона для категорий */
+    padding: 10px; /* Внутренний отступ */
+    border-radius: 5px; /* Закругление углов */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для каждой категории */
+    transition: background-color 0.3s, transform 0.2s; /* Плавный переход */
+}
+
+/* Колонки */
+.column {
+    flex: 1; /* Позволяет колонке занимать оставшееся пространство */
+    padding: 20px; /* Отступы внутри колонки */
+}
+
+/* Заголовки */
+h2 {
+    text-align: center; 
+    color: #333;
+}
+
+/* Блок с блюдом */
+.item-block {
+    display: flex;
+    width: 100%; /* Задаем ширину на всю страницу */
+    align-items: stretch; /* Растянуть дочерние элементы по высоте */
+}
+
+/* Основные стили для формы блюда */
+.item-details {
+    display: flex; 
+    background-color: #f9f9f9; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    padding: 15px; 
+    margin: 15px 0; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+    flex-grow: 1; /* Позволяем элементу занимать доступное пространство */
+}
+
+.item-details:hover {
+    background-color: #efefef; 
+}
+
+/* Изображение блюда */
+.item-image {
+    width: 100px; 
+    height: auto; 
+    border-radius: 5px; 
+    margin-right: 15px; 
+}
+
+/* Подробности о блюде */
+.item-name, .item-calories {
+    font-weight: bold;
+    margin-bottom: 5px; 
+}
+
+.item-name-value, .item-calories-value {
+    color: #555; 
+    margin-bottom: 10px; 
+}
+
+/* Стиль для дополнительных деталей блюда */
+.item-extra-details {
+    margin-top: 10px; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    background-color: #f1f1f1; 
+}
+
+/* Модальное окно */
+.modal {
+    display: none;  
+    position: fixed;  
+    z-index: 1;  
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;  
+    overflow: auto;  
+    background-color: rgba(0, 0, 0, 0.4);  
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;  
+    padding: 20px;
+    border: 1px solid #888;  
+    width: 80%;
+    border-radius: 10px; 
+    max-height: 80vh; 
+    overflow-y: auto; 
+}
+
+#modal-dish-recipe {
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
+    margin: 10px 0; 
+}
+
+/* Кнопка закрытия модального окна */
+.close {
+    color: #aaa; 
+    float: right; 
+    font-size: 28px; 
+    font-weight: bold; 
+}
+
+.close:hover,
+.close:focus {
+    color: black; 
+    text-decoration: none; 
+    cursor: pointer; 
+}
+
+/* Информация о блюдах */
+.modal-dish-data {
+    display: flex;
+    margin: 10px;
+    flex-direction: column;
+}
+
+/* Питательная информация о блюдах */
+.dish-nutrition-info {
+    display: flex; /* Flexbox для группировки элементов */
+    flex-direction: row; /* Вертикальное расположение */
+}
+
+.nutrition-items {
+    display: flex;
+}
+
+.nutrition-item {
+    margin: 10px; /* Отступы между элементами */
+}
+
+.nutrition-item span {
+    font-weight: bold; /* Жирный шрифт для значений */
+    display: block; /* Отображение блочным элементом для разделения */
+}
+
+.nutrition-item p {
+    font-weight: normal; /* Тонкий шрифт для названия */
+    margin: 0; /* Убираем отступы */
+}
+
+/* Стиль для иконки плюса */
+.plus-icon {
+    font-weight: bold; /* Увеличиваем жирность текста */
+    line-height: 50px; /* Центрируем плюс вертикально */
+}
+
+/* Подсказка для кнопки сохранения */
+.save-button .tooltip {
+    visibility: hidden; /* Скрываем подсказку по умолчанию */
+    width: 120px; /* Ширина подсказки */
+    background-color: black; /* Цвет фона подсказки */
+    color: #fff; /* Цвет текста подсказки */
+    text-align: center; /* Центрируем текст подсказки */
+    border-radius: 5px; /* Скругляем углы подсказки */
+    
+    /* Позиционирование подсказки */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Подсказка выше кнопки */
+    left: 50%;
+    margin-left: -60px; /* Смещаем влево для центрирования */
+    
+    padding: 5px 0;
+}
+
+.save-button:hover .tooltip {
+    visibility: visible; /* Показываем подсказку при наведении */
+}
+
+/* Контейнер для кнопки добавления */
+.add-button-container {
+    margin: 15px 5px; /* Отступ между блоком с блюдом и кнопкой */
+    display: flex; /* Flexbox для центрирования кнопки по высоте */
+    align-items: stretch; /* Растянуть кнопку по высоте */
+}
+
+/* Кнопка сохранения с полным расширением */
+.save-button {
+    width: 100%; /* Кнопка займет всю ширину контейнера */
+    height: 100%; /* Установить высоту кнопки равной высоте родителя */
+    border: none; /* Убираем стандартные границы */
+    border-radius: 5px; /* Углы кнопки */
+    background-color: #007BFF; /* Цвет фона кнопки */
+    color: white; /* Цвет текста */
+    cursor: pointer; /* Курсор при наведении */
+    text-align: center; /* Текст по центру */
+    transition: background-color 0.3s; /* Плавный переход цвета */
+    outline: none; /* Убираем стандартные обводки */
+}
+
+.save-button:hover {
+    background-color: #0056b3; /* Цвет фона при наведении */
+}
+
+/* Блок блюда */
+.dish-block {
+    display: flex;
+    border: 1px solid #ccc; /* Контур блока */
+    border-radius: 8px; /* Скругление углов контурного блока */
+    margin: 20px; /* Отступы между блюдами */
+    padding: 10px; /* Отступы внутри блока */
+    background-color: #f9f9f9; /* Фоновый цвет блока */
+}
+
+/* Форма блюда */
+.dish-form {
+    display: flex; /* Для размещения элементов в ряд */
+    width: 100%; /* Растягивание на максимальную ширину */
+    cursor: pointer; /* Указатель при наведении */
+}
+
+.dish-details {
+    margin-left: 30px;
+}
+
+.dish-image {
+    max-width: 100%; /* Максимальная ширина изображения */
+    height: auto; /* Автоматическая высота для пропорций */
+}
+
+/* Модальные продукты */
+.modal-dish-products {
+    list-style-type: none; /* Убираем маркеры списка */
+    margin: 10px; /* Убираем отступы */
+}
+
+#product-list {
+    display: flex;
+    padding: 5px 0;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.product-item {
+    display: flex; /* Делаем элементы продуктов флекс-элементами */
+    justify-content: space-between; /* Распределяем продукты и их вес */
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 1200px) {
+    #main-content {
+        flex-direction: column; /* Вертикальная ориентация для средних экранов */
+    }
+
+    .item-block, .dish-block {
+        flex-direction: column; /* Вертикальное размещение для маленьких экранов */
+    }
+
+    .item-details, .dish-form {
+        flex-direction: column; /* Вертикальное размещение внутри блока блюда */
+    }
+
+    .dish-details {
+        margin-left: 0; /* Убираем левый отступ для мобильных */
+        margin-top: 10px; /* Добавляем верхний отступ для мобильных */
+    }
+}
+
+@media (max-width: 768px) {
+    #category-sidebar {
+        width: 100%; /* Полная ширина для мобильных */
+        position: relative; /* Снимаем фиксированное положение */
+        height: auto; /* Убираем высоту */
+    }
+
+    .item-image {
+        width: 80px; /* Уменьшаем размер изображения для мобильных */
+    }
+
+    .item-details, .dish-block {
+        flex-direction: column; /* Стилю вертикально */
+        align-items: center; /* Центрируем элементы */
+    }
+
+    .ingredient input {
+        width: 100%; /* Полная ширина для мобильных */
+    }
+}

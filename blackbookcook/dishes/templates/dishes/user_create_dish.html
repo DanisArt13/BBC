@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Сохраненные блюда{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'dishes/css/user_create_dish.css' %}">
+<h1>Создать Блюдо</h1>
+<form method="POST" enctype="multipart/form-data" action="{% url 'dishes:user_create_dish' %}">
+    {% csrf_token %}
+    <div>
+        <label for="name">Название блюда:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="image">Изображение:</label>
+        <input type="file" id="images" name="images" required>
+    </div>
+    <div>
+        <label for="categorys">Категория:</label>
+        <select name="category" id="category" required>
+            <option value="">--Выберите категорию--</option>
+            {% for category in categories %}
+                <option value="{{ category }}">{{ category }}</option>
+            {% endfor %}
+        </select>
+        
+    </div>
+    <div>
+        <label for="recipes">Рецепт:</label>
+        <textarea id="recipes" name="recipes" rows="4" required></textarea>
+    </div>
+
+    {{ dish_form.as_p }}
+    <h2>Добавить Продукты</h2>
+    <div id="ingredients">
+        <div class="ingredient">
+            <select name="products">
+                <option>--Выберите продукт--</option>
+                {% for p in products %}
+                    <option value="{{ p.id }}">{{ p.name }}</option>
+                {% endfor %}
+            </select>
+            <input type="number" name="weights" placeholder="Вес (грамм)">
+        </div>
+    </div>
+    <button type="button" onclick="addIngredient()">Добавить еще ингредиент</button>
+    
+    <button type="submit">Создать Блюдо</button>
+</form>
+
+<a href="{% url 'dishes:saved_dishes' %}">Назад к сохранённым блюдам</a>
+
+<script>
+    
+    function addIngredient() {
+    let ingredients = document.getElementById('ingredients');
+    let newIngredient = document.createElement('div');
+    newIngredient.classList.add('ingredient');
+    newIngredient.innerHTML = `
+        <select name="products">
+            <option>--Выберите продукт--</option>
+            {% for p in products %}
+                <option value="{{ p.id }}">{{ p.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="number" name="weights" placeholder="Вес (грамм)">
+    `;
+    ingredients.appendChild(newIngredient);
+    }
+
+</script>
+
+{% endblock %}

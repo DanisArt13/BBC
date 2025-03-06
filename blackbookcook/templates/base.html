@@ -1,0 +1,31 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+{% load static %}
+
+
+<html lang="ru"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>{% block title %}Главная страница{% endblock %}</title> 
+    <link rel="icon" href="{% static 'images/bcb.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'deps/css/base.css' %}"> <!-- Подключаем CSS --> 
+</head> 
+<body> 
+    <header> 
+        <nav> 
+            <a href="home">Главное меню</a>
+            <a href="{% url 'forum:post_list' %}">Форум</a>
+            <a href="{% url 'products:products' %}">Продукты</a>
+            <a href="{% url 'dishes:dishes' %}">Блюда</a>
+            <a href="{% url 'calculator:calculator' %}">Калькулятор калорий</a>
+            <a href="{% url 'users:profile' %}">Профиль</a>
+        </nav> 
+    </header> 
+    <div class="container"> 
+        {% block content %}
+        {% endblock %}
+    </div> 
+    <script src="{% static 'js/base.js' %}"></script> 
+</body> 
+</html>

@@ -1,0 +1,29 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+{% load static %}
+
+
+<html lang="ru"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>{% block title %}Главная страница{% endblock %}</title> 
+    <link rel="stylesheet" href="{% static 'css/base.css' %}"> <!-- Подключаем CSS --> 
+</head> 
+<body> 
+    <header> 
+        <nav> 
+            <a href="index">Главное меню</a>
+            <a href="products">Продукты</a>
+            <a href="dishes">Блюда</a>
+            <a href="calculator">Калькулятор калорий</a>
+            <a href="profile">Профиль</a>
+        </nav> 
+    </header> 
+    <div class="container"> 
+        {% block content %}
+        {% endblock %}
+    </div> 
+    <script src="{% static 'js/base.js' %}"></script> 
+</body> 
+</html>

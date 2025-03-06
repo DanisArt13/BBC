@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'post/css/post.css' %}">
+<div class="posts-container">
+    
+    <ul class="post-list">
+        {% for post in posts %}
+        <li class="post-item">
+            <div class="post-header">
+                <h2 class="post-title">
+                    <a href="{% url 'forum:post_detail' post.pk %}">{{ post.title }}</a>
+                </h2>
+                <div class="post-meta">
+                    <span class="post-author">{{ post.author }}</span> - 
+                    <span class="post-date">{{ post.created_at|date:"d.m.Y" }}</span>
+                </div>
+            </div>
+            <p class="post-excerpt">{{ post.content|truncatewords:30 }}</p> <!-- Вывод первых 30 слов поста -->
+            
+            <!-- Блок комментариев -->
+           <div class="comments-section">
+                <button class="toggle-comments">Показать комментарии</button>
+                <ul class="comments-list" style="display: none;">
+                    {% for comment in post.comments.all %}
+                        <li class="comment-item">
+                            <strong>{{ comment.author }}:</strong> {{ comment.content }} <br>
+                            <small>Дата: {{ comment.created_at|date:"d.m.Y H:i" }}</small>
+                        </li>
+                    {% empty %}
+                        <li>Комментариев нет.</li>
+                    {% endfor %}
+                </ul>
+                <div class="add-comment-form" style="display: none;">
+                    <h3>Добавить комментарий:</h3>
+                    <form method="post" action="{% url 'forum:add_comment' post.id %}">
+                        {% csrf_token %}
+                        <textarea name="content" required></textarea>
+                        <button type="submit">Отправить</button>
+                    </form>
+                    
+                </div>
+            </div>
+            <!-- Блок для оценки поста -->
+            <div class="post-rating">
+                <span>Оценка: </span>
+                <span class="rating-value">{{ post.rating_count }}</span>
+                <form method="post" action="{% url 'forum:post_rating' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="post_id" value="{{ post.pk }}">  <!-- Скрытое поле для передачи ID поста -->
+                    <button class="rate-up-button" name="rate_up" value="1">👍</button>
+                    <button class="rate-down-button" name="rate_down" value="-1">👎</button>
+                </form>
+
+                <p>Средняя оценка: {{ post.total_rating }}</p>
+            </div>
+            
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<script src="{% static 'post/js/post.js' %}"></script>
+{% endblock %}
