@@ -5,14 +5,16 @@ from django.db.models import SmallAutoField, DecimalField, CharField, ImageField
 class Product(models.Model):
     id = SmallAutoField(primary_key=True)
     name = CharField(max_length=50)
-    images = models.CharField(max_length=255, null=True)
+    calories = TextField()
+    fats = TextField()
+    proteins = TextField()
+    carbohydrates = TextField()
+    water = TextField()
+    sugar = TextField()
+    image_url = models.CharField(max_length=255, null=True)
+    categories = CharField(max_length=50, null=True)
     text = TextField(null=True)
-    proteins = DecimalField(max_digits=5, decimal_places=2)
-    fats = DecimalField(max_digits=5, decimal_places=2)
-    carbs = DecimalField(max_digits=5, decimal_places=2)
-    kcals = DecimalField(max_digits=5, decimal_places=2)
-    categorys = CharField(max_length=50, null=True)
-    areas = CharField(max_length=50, null=True)
+    area = CharField(max_length=50, null=True)
 
     class Meta:
         db_table = 'products'
@@ -21,5 +23,5 @@ class Product(models.Model):
         return self.name
         
     def __repr__(self):
-        return f'{self.id}\n{self.name}\n{self.kcals}\n{self.proteins}\n{self.fats}\n{self.carbs}'
+        return f'{self.id}\n{self.name}\n{self.calories}\n{self.categories}\n{self.image_url}'
 
