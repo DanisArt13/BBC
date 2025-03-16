@@ -5,14 +5,14 @@ from django import forms  # Импортируем forms, если вы хоти
 # Убедитесь, что вы импортировали необходимые классы
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'kcals', 'proteins', 'fats', 'carbs', 'categorys')  # Поля, отображаемые в списке
+    list_display = ('name', 'calories', 'fats', 'proteins', 'carbohydrates', 'water', 'sugar', 'image_url', 'categories', 'text', 'area')  # Поля, отображаемые в списке
     search_fields = ('name',)  # Позволяет искать по названию продукта
-    list_filter = ('categorys',)  # Фильтры по категориям
+    list_filter = ('categories',)  # Фильтры по категориям
     ordering = ('name',)  # Сортировка по имени
     
     fieldsets = (
         (None, {
-            'fields': ('name', 'kcals', 'proteins', 'fats', 'carbs', 'images', 'categorys'),
+            'fields': ('name', 'calories', 'fats', 'proteins', 'carbohydrates', 'water', 'sugar', 'image_url', 'categories', 'text', 'area'),
         }),
     )
 
