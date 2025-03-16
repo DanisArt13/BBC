@@ -46,4 +46,62 @@ header {
 
 /* Основные стили для колонок */
 .column {
-    flex: 1; /* Позволяет колон
+    flex: 1; /* Позволяет колон */
+}
+
+/* Блок продукта */
+
+.product-block {
+    display: flex;
+    border: 1px solid #ccc; /* Контур блока */
+    border-radius: 8px; /* Скругление углов контурного блока */
+    margin: 20px; /* Отступы между блюдами */
+    padding: 10px; /* Отступы внутри блока */
+    background-color: #f9f9f9; /* Фоновый цвет блока */
+}
+
+/* Форма продукта */
+.product-form {
+    display: flex; /* Для размещения элементов в ряд */
+    width: 100%; /* Растягивание на максимальную ширину */
+    cursor: pointer; /* Указатель при наведении */
+}
+
+.product-details {
+    margin-left: 30px;
+}
+
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%; /* Полная ширина */
+    height: 100%; /* Полная высота */
+    overflow: auto; /* Прокрутка для больших модальных окон */
+    background-color: rgb(0,0,0); /* Черный фон */
+    background-color: rgba(0,0,0,0.4); /* Чуть прозрачный черный фон */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% сверху и центрирование по горизонтали */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Ширина окна */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
