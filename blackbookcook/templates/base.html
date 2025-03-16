@@ -1,7 +1,5 @@
-<!-- templates/base.html -->
 <!DOCTYPE html>
 {% load static %}
-
 
 <html lang="ru"> 
 <head> 
@@ -9,17 +7,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>{% block title %}Главная страница{% endblock %}</title> 
     <link rel="icon" href="{% static 'images/bcb.ico' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'deps/css/base.css' %}"> <!-- Подключаем CSS --> 
+    <link rel="stylesheet" href="{% static 'deps/css/base.css' %}"> <!-- Подключаем CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Подключаем Font Awesome -->
 </head> 
 <body> 
     <header> 
-        <nav> 
-            <a href="home">Главное меню</a>
-            <a href="{% url 'forum:post_list' %}">Форум</a>
-            <a href="{% url 'products:products' %}">Продукты</a>
-            <a href="{% url 'dishes:dishes' %}">Блюда</a>
-            <a href="{% url 'calculator:calculator' %}">Калькулятор калорий</a>
-            <a href="{% url 'users:profile' %}">Профиль</a>
+        <nav>
+            <div class='header-bord'>
+                <a href="{% url 'home:home' %}">
+                    <span class="nav-text">Главное меню</span>
+                    <i class="fas fa-home nav-icon"></i> <!-- Иконка для домашней страницы -->
+                </a>
+            </div>
+            <div class='header-bord'>
+                <a href="{% url 'forum:post_list' %}">
+                    <span class="nav-text">Форум</span>
+                    <i class="fas fa-comments nav-icon"></i> <!-- Иконка для форума -->
+                </a>
+            </div>
+            <div class='header-bord'>
+                <a href="{% url 'products:products' %}">
+                    <span class="nav-text">Продукты</span>
+                    <i class="fas fa-box nav-icon"></i> <!-- Иконка для продуктов -->
+                </a>
+            </div>
+            <div class='header-bord'>
+                <a href="{% url 'dishes:dishes' %}">
+                    <span class="nav-text">Блюда</span>
+                    <i class="fas fa-utensils nav-icon"></i> <!-- Иконка для блюд -->
+                </a>
+            </div>
+            <div class='header-bord'>
+                <a href="{% url 'calculator:calculator' %}">
+                    <span class="nav-text">Калькулятор калорий</span>
+                    <i class="fas fa-calculator nav-icon"></i> <!-- Иконка для калькулятора -->
+                </a>
+            </div>
+            <div class='header-bord'>
+                <a href="{% url 'users:profile' %}">
+                    <span class="nav-text">Профиль</span>
+                    <i class="fas fa-user nav-icon"></i> <!-- Иконка для профиля -->
+                </a>
+            </div>
         </nav> 
     </header> 
     <div class="container"> 
