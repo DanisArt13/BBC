@@ -11,22 +11,70 @@ header {
     padding: 10px 20px;
 }
 
+.header-bord {
+    border: 3px solid;
+    border-radius: 5px;
+    border-color: #81dec2;
+}
+
 nav {
     display: flex;
     justify-content: space-between;
 }
 
+/* Стили для ссылок в навигации */
 nav a {
     color: #fff;
     text-decoration: none;
     padding: 10px 20px;
     transition: background-color 0.3s;
+    display: flex; /* Для центровки иконок и текста */
+    align-items: center; /* Центрируем по вертикали */
 }
 
+/* Стили для текста и иконок */
+.nav-text {
+    margin-right: 10px; /* Отступ между текстом и иконкой */
+}
+
+/* Эффект при наведении на ссылки */
 nav a:hover {
     background-color: #555;
+}
+
+/* Адаптивность - скрытие текста на мобильных устройствах */
+@media (max-width: 768px) {
+    .nav-text {
+        display: none; /* Скрывает текст на мобильных устройствах */
+    }
+
+    .nav-icon {
+        font-size: 24px; /* Размер иконки на мобильных устройствах */
+    }
+}
+
+/* Медиазапрос для экранов шириной 480px и меньше */
+@media (max-width: 480px) {
+    header {
+        padding: 10px 10px; /* Уменьшение отступов в заголовке */
+        text-align: center; /* Центрирование текста в заголовке */
+    }
+
+    nav a {
+        padding: 5px; /* Ещё большее уменьшение отступов для ссылок */
+        font-size: 14px; /* Уменьшение размера шрифта для небольших экранов */
+    }
+
+    .header-bord {
+        border-width: 2px; /* Уменьшение ширины границы для малых экранов */
+    }
+
+    .nav-icon {
+        font-size: 20px; /* Уменьшение размера иконки для очень малых экранов */
+    }
 }
 
 .container {
     padding: 20px;
 }
+ 
