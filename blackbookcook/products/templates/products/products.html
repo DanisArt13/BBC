@@ -14,18 +14,35 @@
         <div id="product-list">
             <!-- Поле для поиска -->
             <input type="text" id="search" placeholder="Поиск продуктов..." oninput="filterProducts()" />
-            {% for p in products %}
-                <div class="product-form" id="product-form" onclick="openProductModal('{{ p.id }}', '{{ p.name }}', '{{ p.kcals }}', '{{ p.proteins }}', '{{ p.fats }}', '{{ p.carbs }}')" data-category="{{ p.categorys }}">
-                   {% if p.images.url %}
-                       <img src="{{ p.images.url }}" class="product-image" style="width: 50px; height: auto;">
-                   {% else %}
-                       <img src="{% static 'products/images/none.jpg' %}" class="product-image" style="width: 50px; height: auto;">
-                   {% endif %}
-                   <div class="product-details">
-                       <h3 class="product-name-value">{{ p.name }}</h3>
-                       
-                   </div>
+            {% for product in products %}
+                <div class="product-block">
+                    <div class="product-form" 
+                         onclick="
+                            openProductModal(
+                                '{{ product.id }}', 
+                                '{{ product.name }}', 
+                                '{% if product.image_url %}{% static product.image_url %}{% else %}{% static 'product/images/none.jpg' %}{% endif %}', 
+                                '{{ product.calories }}', 
+                                '{{ product.fats }}', 
+                                '{{ product.proteins }}', 
+                                '{{ product.carbohydrates }}',
+                                '{{ product.water }}',
+                                '{{ product.sugar }}'
+                            )" 
+                         data-category="{{ product.categorys }}">
+                        <img src="{% if product.image_url %}{% static product.image_url %}{% else %}{% static 'products/images/none.jpg' %}{% endif %}" alt="{{ dish.name }}" class="dish-image" style="width: 200px; height: 200px;">
+
+                        <div class="product-details">
+                            <h3 class="product-name-value">{{ product.name }}</h3>
+                            <div>
+                                <label class="product-calories">Калории:</label>
+                                <span class="product-calories-value">{{ product.calories }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
+
             {% endfor %}
         </div>
     </div>
@@ -47,29 +64,31 @@
         <span class="close" onclick="closeProductModal()">&times;</span>
         <h2 id="modal-product-name"></h2>
         <div class="modal-product-data">
-            <image>
-                {% if p.images.url %}
-                    <img src="{{ p.images.url }}" class="product-image" style="width: 50px; height: auto;">
-                {% else %}
-                    <img src="{% static 'images/dishes/img_none.png' %}" class="product-image" style="width: 50px; height: auto;">
-                {% endif %}
-            </image>
             <div class="product-nutrition-info">
+              <img id="modal-product-image" class="product-image" style="width: 350px; height: auto;">
                 <div class="nutrition-item">
-                    <span id="modal-product-kcals"></span>
+                    <span id="modal-product-calories"></span>
                     <p>Калории</p>
-                </div>
-                <div class="nutrition-item">
-                    <span id="modal-product-proteins"></span>
-                    <p>Белки</p>
                 </div>
                 <div class="nutrition-item">
                     <span id="modal-product-fats"></span>
                     <p>Жиры</p>
                 </div>
                 <div class="nutrition-item">
-                    <span id="modal-product-carbs"></span>
+                    <span id="modal-product-proteins"></span>
+                    <p>Белки</p>
+                </div>
+                <div class="nutrition-item">
+                    <span id="modal-product-carbohydrates"></span>
                     <p>Углеводы</p>
+                </div>
+                <div class="nutrition-item">
+                    <span id="modal-product-water"></span>
+                    <p>Вода</p>
+                </div>
+                <div class="nutrition-item">
+                    <span id="modal-product-sugar"></span>
+                    <p>Сахар</p>
                 </div>
             </div>
         </div>
@@ -94,12 +113,15 @@
         }
     }
 
-    function openProductModal(id, name, kcals, proteins, fats, carbs) {
+    function openProductModal(id, name, image, calories, fats, proteins, carbohydrates, water, sugar) {
+        document.getElementById('modal-product-image').src = image
         document.getElementById('modal-product-name').textContent = name;
-        document.getElementById('modal-product-kcals').textContent = kcals;
-        document.getElementById('modal-product-proteins').textContent = proteins;
+        document.getElementById('modal-product-calories').textContent = calories;
         document.getElementById('modal-product-fats').textContent = fats;
-        document.getElementById('modal-product-carbs').textContent = carbs;
+        document.getElementById('modal-product-proteins').textContent = proteins;
+        document.getElementById('modal-product-carbohydrates').textContent = carbohydrates;
+        document.getElementById('modal-product-water').textContent = water;
+        document.getElementById('modal-product-sugar').textContent = sugar;
         
         const modal = document.getElementById('productModal');
         modal.style.display = "block"; // Показываем модальное окно
