@@ -15,6 +15,7 @@ header {
 #main-content {
     display: flex;
     height: calc(100vh - 60px); /* Учитывая высоту header, скорректируйте 60px по мере необходимости */
+    flex-direction: column; /* Вертикальная ориентация для маленьких экранов */
 }
 
 /* Боковая панель категорий */
@@ -29,6 +30,8 @@ header {
 
 /* Список категорий */
 #category-list {
+    display: flex; /* Устанавливаем flexbox для горизонтального расположения */
+    flex-wrap: wrap; /* Позволяем переносить элементы на следующую строку */
     list-style-type: none; /* Отключаем стандартные маркеры списка */
     padding: 0; /* Убираем отступы */
     margin: 0; /* Убираем маргин */
@@ -36,7 +39,8 @@ header {
 
 /* Элементы списка категорий */
 #category-list li {
-    margin-bottom: 15px; /* Отступ между категориями */
+    margin: 5px; /* Отступ между категориями */
+    cursor: pointer; /* Курсор указывает на интерактивный элемент */
     background-color: #ffffff; /* Цвет фона для категорий */
     padding: 10px; /* Внутренний отступ */
     border-radius: 5px; /* Закругление углов */
@@ -44,64 +48,295 @@ header {
     transition: background-color 0.3s, transform 0.2s; /* Плавный переход */
 }
 
-/* Основные стили для колонок */
+#category-list li:hover {
+    background-color: #0056b3; /* Цвет фона при наведении */
+}
+/* Колонки */
 .column {
-    flex: 1; /* Позволяет колон */
+    flex: 1; /* Позволяет колонке занимать оставшееся пространство */
+    padding: 20px; /* Отступы внутри колонки */
 }
 
-/* Блок продукта */
+/* Заголовки */
+h2 {
+    text-align: center; 
+    color: #333;
+}
 
+/* Блок с блюдом */
+.item-block {
+    display: flex;
+    width: 100%; /* Задаем ширину на всю страницу */
+    align-items: stretch; /* Растянуть дочерние элементы по высоте */
+}
+
+/* Основные стили для формы блюда */
+.item-details {
+    display: flex; 
+    background-color: #f9f9f9; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    padding: 15px; 
+    margin: 15px 0; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+    flex-grow: 1; /* Позволяем элементу занимать доступное пространство */
+}
+
+.item-details:hover {
+    background-color: #efefef; 
+}
+
+/* Изображение блюда */
+.item-image {
+    width: 100px; 
+    height: auto; 
+    border-radius: 5px; 
+    margin-right: 15px; 
+}
+
+/* Подробности о блюде */
+.item-name, .item-calories {
+    font-weight: bold;
+    margin-bottom: 5px; 
+}
+
+.item-name-value, .item-calories-value {
+    color: #555; 
+    margin-bottom: 10px; 
+}
+
+/* Стиль для дополнительных деталей блюда */
+.item-extra-details {
+    margin-top: 10px; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    background-color: #f1f1f1; 
+}
+
+/* Модальное окно */
+.modal {
+    display: none;  
+    position: fixed;  
+    z-index: 1;  
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;  
+    overflow: auto;  
+    background-color: rgba(0, 0, 0, 0.4);  
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;  
+    padding: 20px;
+    border: 1px solid #888;  
+    width: 80%;
+    border-radius: 10px; 
+    max-height: 80vh; 
+    overflow-y: auto; 
+}
+
+#modal-product-recipe {
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
+    margin: 10px 0; 
+}
+
+/* Кнопка закрытия модального окна */
+.close {
+    color: #aaa; 
+    float: right; 
+    font-size: 28px; 
+    font-weight: bold; 
+}
+
+.close:hover,
+.close:focus {
+    color: black; 
+    text-decoration: none; 
+    cursor: pointer; 
+}
+
+/* Информация о блюдах */
+.modal-product-data {
+    display: flex;
+    margin: 10px;
+    flex-direction: column;
+}
+
+/* Питательная информация о блюдах */
+.product-nutrition-info {
+    display: flex; /* Flexbox для группировки элементов */
+    flex-direction: row; /* Вертикальное расположение */
+}
+
+.nutrition-items {
+    display: flex;
+}
+
+.nutrition-item {
+    margin: 10px; /* Отступы между элементами */
+}
+
+.nutrition-item span {
+    font-weight: bold; /* Жирный шрифт для значений */
+    display: block; /* Отображение блочным элементом для разделения */
+}
+
+.nutrition-item p {
+    font-weight: normal; /* Тонкий шрифт для названия */
+    margin: 0; /* Убираем отступы */
+}
+
+/* Стиль для иконки плюса */
+.plus-icon {
+    font-weight: bold; /* Увеличиваем жирность текста */
+    line-height: 50px; /* Центрируем плюс вертикально */
+}
+
+/* Подсказка для кнопки сохранения */
+.save-button .tooltip {
+    visibility: hidden; /* Скрываем подсказку по умолчанию */
+    width: 120px; /* Ширина подсказки */
+    background-color: black; /* Цвет фона подсказки */
+    color: #fff; /* Цвет текста подсказки */
+    text-align: center; /* Центрируем текст подсказки */
+    border-radius: 5px; /* Скругляем углы подсказки */
+    
+    /* Позиционирование подсказки */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Подсказка выше кнопки */
+    left: 50%;
+    margin-left: -60px; /* Смещаем влево для центрирования */
+    
+    padding: 5px 0;
+}
+
+.save-button:hover .tooltip {
+    visibility: visible; /* Показываем подсказку при наведении */
+}
+
+
+/* Блок блюда */
 .product-block {
     display: flex;
     border: 1px solid #ccc; /* Контур блока */
     border-radius: 8px; /* Скругление углов контурного блока */
-    margin: 20px; /* Отступы между блюдами */
     padding: 10px; /* Отступы внутри блока */
     background-color: #f9f9f9; /* Фоновый цвет блока */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    text-align: center; /* Центрируем текст */
+    transition: transform 0.3s; /* Плавный переход для увеличения */
+    max-width: 250px;
 }
 
-/* Форма продукта */
+.product-block:hover {
+    transform: scale(1.05); /* Увеличиваем блок при наведении */
+}
+
+/* Форма блюда */
 .product-form {
     display: flex; /* Для размещения элементов в ряд */
+    flex-direction: column;
     width: 100%; /* Растягивание на максимальную ширину */
     cursor: pointer; /* Указатель при наведении */
+    align-items: center;
+
 }
 
 .product-details {
     margin-left: 30px;
 }
 
-.modal {
-    display: none; /* Скрыто по умолчанию */
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%; /* Полная ширина */
-    height: 100%; /* Полная высота */
-    overflow: auto; /* Прокрутка для больших модальных окон */
-    background-color: rgb(0,0,0); /* Черный фон */
-    background-color: rgba(0,0,0,0.4); /* Чуть прозрачный черный фон */
+.product-image {
+    max-width: 100%; /* Максимальная ширина изображения */
+    height: auto; /* Автоматическая высота для пропорций */
 }
 
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% сверху и центрирование по горизонтали */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Ширина окна */
+#product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Создаем 3 колонки */
+    gap: 20px; /* Отступ между колонками */
+    padding: 5px 0;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.icon-text{
+    font-size: 20px;
+    color: #57af94
+}
+.product-item {
+    display: flex; /* Делаем элементы продуктов флекс-элементами */
+    justify-content: space-between; /* Распределяем продукты и их вес */
+}
+.iconify {
+    color: #57af94;
+    width: 25px;  /* Ширина иконки */
+    height: 25px; /* Высота иконки */
+}
+/* Медиа-запросы для адаптивности */
+@media (max-width: 1200px) {
+    #main-content {
+        flex-direction: column; /* Вертикальная ориентация для средних экранов */
+    }
+
+    .item-block, .product-block {
+        flex-direction: column; /* Вертикальное размещение для маленьких экранов */
+    }
+
+    .item-details, .product-form {
+        flex-direction: column; /* Вертикальное размещение внутри блока блюда */
+    }
+
+    .product-details {
+        margin-left: 0; /* Убираем левый отступ для мобильных */
+        margin-top: 10px; /* Добавляем верхний отступ для мобильных */
+    }
+    .product-list{
+        gap: 0px;
+    }
 }
 
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+@media (max-width: 768px) {
+    #category-sidebar {
+        width: 100%; /* Полная ширина для мобильных */
+        position: relative; /* Снимаем фиксированное положение */
+        height: auto; /* Убираем высоту */
+    }
+
+    .item-image {
+        width: 80px; /* Уменьшаем размер изображения для мобильных */
+    }
+
+    .item-details, .product-block {
+        flex-direction: column; /* Стилю вертикально */
+        align-items: center; /* Центрируем элементы */
+    }
+    
+    .icon-text{
+        display: none;
+    }
+    
+    .iconify {
+        width: 40px;  /* Ширина иконки */
+        height: 40px; /* Высота иконки */
+    }
+    
+    #product-list {
+        grid-template-columns: repeat(2, 1fr); /* Создаем 3 колонки */
+    }
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+@media (max-width: 540px) {
+    #product-list {
+        grid-template-columns: repeat(1, 1fr); /* Создаем 3 колонки */
+    }
+    .iconify {
+        width: 50px;  /* Ширина иконки */
+        height: 50px; /* Высота иконки */
+    }
 }
